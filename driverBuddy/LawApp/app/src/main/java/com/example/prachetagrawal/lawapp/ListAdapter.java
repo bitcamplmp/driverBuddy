@@ -1,5 +1,6 @@
 package com.example.prachetagrawal.lawapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.support.v7.widget.CardView;
@@ -20,6 +21,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListManager> {
 
     private List<LawStorage> lawList;
 
+
+    public ListAdapter(List<LawStorage> list) {
+        lawList = list;
+    }
     @Override
     public ListManager onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.
@@ -33,7 +38,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListManager> {
     public void onBindViewHolder(ListManager holder, int i) {
         LawStorage ls = lawList.get(i);
         holder.vTitle.setText(ls.mainTitle);
-        holder.vLogo.setImageIcon(ls.logo);
+        //holder.vLogo.setImageResource();
     }
 
     @Override
@@ -44,14 +49,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListManager> {
     public class ListManager extends RecyclerView.ViewHolder {
         private CardView cv;
         private TextView vTitle;
-        private ImageView vLogo;
+        //private ImageView vLogo;
 
 
         public ListManager(View v) {
             super(v);
             cv = v.findViewById(R.id.card);
             vTitle = v.findViewById(R.id.cardTitle);
-            vLogo = v.findViewById(R.id.cardLogo);
+            //vLogo = v.findViewById(R.id.cardLogo);
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick (View v) {

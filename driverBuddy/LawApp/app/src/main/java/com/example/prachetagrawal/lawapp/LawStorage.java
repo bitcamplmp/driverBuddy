@@ -10,12 +10,11 @@ import java.util.HashMap;
  */
 
 public class LawStorage {
-    protected Icon logo;
+    //protected R.drawable logo;
     protected String mainTitle;
     protected HashMap<String, String> laws;
 
-    public LawStorage(Icon logo, String mainTitle, HashMap<String, String> laws) {
-        this.logo = logo;
+    public LawStorage(String mainTitle, HashMap<String, String> laws) {
         this.mainTitle = mainTitle;
         this.laws = laws;
     }

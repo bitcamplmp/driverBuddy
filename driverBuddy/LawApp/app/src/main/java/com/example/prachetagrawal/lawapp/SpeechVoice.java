@@ -20,7 +20,7 @@ public class SpeechVoice {
         });
     }
 
-    public void readSentence(String sentance){
+    public void readSentence(String sentence){
 
     }
 }
