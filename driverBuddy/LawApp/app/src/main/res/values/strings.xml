@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">LawApp</string>
+    <string name="app_name">Driver Buddy</string>
+    <string name="main_button">Go!</string>
 </resources>
