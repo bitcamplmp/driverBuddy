@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.prachetagrawal.lawapp">
 
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,8 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DisplayLaw" />
-        <activity android:name=".CategoryInfo"></activity>
+        <activity android:name=".DisplayLaw"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".CategoryInfo"
+            android:parentActivityName=".DisplayLaw"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
