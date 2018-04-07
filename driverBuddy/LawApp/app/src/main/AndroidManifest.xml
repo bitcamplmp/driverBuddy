@@ -20,14 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DisplayLaw"
-            android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".CategoryInfo"
-            android:parentActivityName=".DisplayLaw"></activity>
+        <activity
+            android:name=".DisplayLaw"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".CategoryInfo"
+            android:parentActivityName=".DisplayLaw" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".SpeechVoiceActivity"></activity>
     </application>
 
 </manifest>

@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //SpeechVoice speach = new SpeechVoice(savedInstanceState);
-        //speach.readSentence(text, savedInstanceState);
-
         Button mainButton = findViewById(R.id.buttonToMain);
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
