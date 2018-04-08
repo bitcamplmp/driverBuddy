@@ -11,61 +11,51 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.util.List;
 
 /**
  * Created by prachetagrawal on 4/6/18.
  */
 
-public class LocationService extends Service {
+public class LocationService{
+    Context context;
 
-    private LocationListener listener;
     private LocationManager manager;
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public LocationService(Context context) {
+        this.context = context;
     }
 
     @SuppressLint("MissingPermission")
-    @Override
-    public void onCreate() {
-        listener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Intent intent = new Intent("Location Updates");
-                intent.putExtra("coordinates", location.getLongitude() + " " + location.getLatitude());
-                sendBroadcast(intent);
+    public Location getLocation() {
+        Location location = null;
+        Log.d("Find Location", "in find_location");
+        String location_context = Context.LOCATION_SERVICE;
+        manager = (LocationManager) context.getSystemService(location_context);
+        List<String> providers = manager.getProviders(true);
+        for (String provider : providers) {
+            manager.requestLocationUpdates(provider, 1000, 0,
+                new LocationListener() {
+
+                    public void onLocationChanged(Location location) {
+                    }
+
+                    public void onProviderDisabled(String provider) {}
+
+                    public void onProviderEnabled(String provider) {}
+
+                    public void onStatusChanged(String provider, int status,
+                                                Bundle extras) {}
+                });
+            if(location == null) {
+                location = manager.getLastKnownLocation(provider);
             }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        };
-
-        manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, listener);
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(manager != null) {
-            manager.removeUpdates(listener);
         }
+        return location;
     }
+
+
 }
