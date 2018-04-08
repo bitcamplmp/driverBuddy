@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.location.LocationListener;
@@ -20,7 +21,6 @@ import android.location.LocationManager;
 import android.provider.Settings;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mainButton;
     private String curState = "";
+    private Button helpButton;
 
     LocationManager locationManager;
     Context mContext;
@@ -55,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, DisplayLaw.class);
                 startActivity(intent);
+            }
+        });
+
+        helpButton = findViewById(R.id.buttonToHelp);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendNotification();
             }
         });
     }
@@ -131,13 +140,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendNotification() {
+        String CHANNEL_ID = "channel_01";
+
         Intent intent = new Intent(this, DisplayLaw.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pend = PendingIntent.getActivity(this, 0, intent, 0);
 
-
         NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(MainActivity.this);
+                new NotificationCompat.Builder(this, CHANNEL_ID);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
         mBuilder.setContentTitle("Welcome to " + curState + " !");
         mBuilder.setContentText("You have new laws to check!");
@@ -145,9 +154,18 @@ public class MainActivity extends AppCompatActivity {
         mBuilder.setContentIntent(pend);
         mBuilder.setAutoCancel(true);
 
+        NotificationManager mNotificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(0, mBuilder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+        mNotificationManager.notify(0, mBuilder.build());
+
     }
 
 
